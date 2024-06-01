@@ -19,5 +19,5 @@ jobs:
             docker --version
             docker build -t "$DOCKER_USERNAME"/simple-node-circleci-app .
             docker tag "$DOCKER_USERNAME"/simple-node-circleci-app "$DOCKER_USERNAME"/simple-node-circleci-app:1.0.0
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
             docker push "$DOCKER_USERNAME"/simple-node-circleci-app:1.0.0
