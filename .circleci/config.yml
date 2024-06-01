@@ -14,10 +14,10 @@ jobs:
           command: echo "No need to install anything. \n Just build and push the Docker Image"
       - run:
           name: Build and push docker image
-          command:
+          command: |
             echo "Inside the Build and push Docker image step"
             docker --version
             docker build -t "$DOCKER_USERNAME"/simple-node-circleci-app .
             docker tag "$DOCKER_USERNAME"/simple-node-circleci-app "$DOCKER_USERNAME"/simple-node-circleci-app:1.0.0
-            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD"
+            echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
             docker push "$DOCKER_USERNAME"/simple-node-circleci-app:1.0.0
