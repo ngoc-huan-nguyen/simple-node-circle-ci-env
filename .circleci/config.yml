@@ -1,0 +1,22 @@
+version: 2.1
+  jobs:
+    build:
+      docker:
+        - image: cimg/base:current
+      working_directory: ~/app
+      steps:
+        - checkout
+        - setup_remote_docker:
+            version: 20.10.14
+        - run:
+            name: Install dependencies
+            command: echo "No need to install anything. \n Just build and push the Docker image"
+        - run:
+            name: Build and push docker image
+            command:
+              echo "Inside the Build and push Docker image step"
+              docker --version
+              docker build -t "$DOCKER_USERNAME"/simple-node-circleci-app .
+              docker tag "$DOCKER_USERNAME"/simple-node-circleci-app "$DOCKER_USERNAME"/simple-node-circleci-app:1.0.0
+              echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+              docker push "$DOCKER_USERNAME"/simple-node-circleci-app:1.0.0
